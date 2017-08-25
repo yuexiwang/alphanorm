@@ -5,7 +5,7 @@
 \title{Cross-validation for alpha-norm}
 \usage{
 cv.alphanorm(x, y, lambda_Tune = exp(-10:10), q_Tune = c(0.1, 0.5, 0.9),
-  intercept = TRUE, nfolds = 5, tol = 1e-07, T = 500)
+  intercept = TRUE, nfolds = 5, tol = 1e-07, T = 500, trace = FALSE)
 }
 \arguments{
 \item{x}{design matrix}
@@ -23,6 +23,8 @@ cv.alphanorm(x, y, lambda_Tune = exp(-10:10), q_Tune = c(0.1, 0.5, 0.9),
 \item{tol}{tolerence of convergence condition}
 
 \item{T}{number of maximum iterations for each coefficient}
+
+\item{trace}{print the process of alphanorm}
 }
 \value{
 An object of S3 class "cv.alphanorm"

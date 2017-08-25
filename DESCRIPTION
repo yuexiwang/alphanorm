@@ -1,7 +1,7 @@
 Package: alphanorm
 Type: Package
 Title: alpha-norm regularization
-Version: 0.1.0
+Version: 0.1.1
 Author: Guanhao Feng, Nicholas G Polson, Yuexi Wang and Jianeng Xu
 Maintainer: Yuexi Wang <yxwang99@uchicago.edu>, Jianeng Xu <jianeng@uchicago.edu>
 Description: An implementation of alpha-norm regulariztaion linear model in R.
