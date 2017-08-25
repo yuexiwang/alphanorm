@@ -106,7 +106,13 @@ alphanorm = function(x,y,lambda=exp(-10:10),q=0.5,
     x = sweep(x,2,x.mean)
   }
   x.norm = apply(x,2,function(x) sqrt(sum(x^2)))
-  x = x/(x.norm+(x.norm==0))
+
+  x = scale(x,center = FALSE,scale = x.norm)
+  for(n_c in 1:dim(x)[2]){
+    if(sum(is.na(x[,n_c]))>0){
+      x[,n_c]<-0
+    }
+  }
 
   # initialize
   z.initial.max = max(abs(crossprod(x,y)))
@@ -162,7 +168,8 @@ alphanorm = function(x,y,lambda=exp(-10:10),q=0.5,
     }
   }
 
-  Beta.final = Beta.final/(x.norm+(x.norm==0))
+  Beta.final = Beta.final/x.norm
+  Beta.final[which(!is.finite(Beta.final))]<-0
   if(intercept)
     Inter = y.mean - crossprod(x.mean,Beta.final)
 
@@ -220,6 +227,7 @@ predict.alphanorm<-function(alphanorm.obj,newx=NULL){
 #' @param nfolds number of folds , default to be 5
 #' @param tol tolerence of convergence condition
 #' @param T number of maximum iterations for each coefficient
+#' @param trace print the process of alphanorm
 #' @return An object of S3 class "cv.alphanorm"
 #' \item{lambda}{the values of lambda used in the fits}
 #' \item{q}{the values of q used in the fits}
@@ -229,7 +237,7 @@ predict.alphanorm<-function(alphanorm.obj,newx=NULL){
 #' @seealso \code{\link{alphanorm}}
 #' @export
 cv.alphanorm<-function(x,y,lambda_Tune=exp(-10:10),q_Tune=c(0.1,0.5,0.9),
-                       intercept=TRUE,nfolds=5,tol=1e-7,T=500){
+                       intercept=TRUE,nfolds=5,tol=1e-7,T=500,trace=FALSE){
   #Here we use mse as the measure for CV
 
   numTrain<-length(y)
@@ -250,7 +258,7 @@ cv.alphanorm<-function(x,y,lambda_Tune=exp(-10:10),q_Tune=c(0.1,0.5,0.9),
     }
 
     for(k in 1:length(q_Tune)){
-      tmp_tune<-alphanorm(X,Y,lambda=lambda_Tune,q=q_Tune[k],intercept)
+      tmp_tune<-alphanorm(X,Y,lambda=lambda_Tune,q=q_Tune[k],intercept,trace)
       if(intercept){
       tmp_beta<-rbind(tmp_tune$Intercept,tmp_tune$Coefficient)
       }else{
