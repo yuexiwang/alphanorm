@@ -42,9 +42,9 @@ Fit a alph-norm model with proximal algorithm and coordinate descent
 \details{
 The sequence of models implied by \code{lambda} is solved via coordinate descent.
 The objective function is:
-RSS+ lambda*penalty .
-Here the penalty is the l_q norm of coefficients, which is sum(|beta_i|^q), 0<q<=1,
-when q=1, it is actually same as lasso
+\deqn{J(\beta)=1/2 \mbox{RSS}+\lambda*\mbox{penalty}}
+Here the penalty is the \eqn{l_q} norm of coefficients, which is \eqn{\sum(|\beta_i|^q), 0<q<=1},
+when \eqn{q=1}, it is actually same as lasso
 }
 \examples{
 x<-matrix(rnorm(100*100),100,100)
@@ -63,8 +63,12 @@ cv.alphanorm(x,y,intercept=FALSE)
 plot(alphanorm.obj)
 }
 \references{
-Feng, Guanhao.,Polson, Nicolas G., Wang, Yuexi.and Xu, Jiang.(2017) Sparse regularization in marketing and Economics,
-\url{https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3022856}
+Feng, Guanhao and Polson, Nick and Wang, Yuexi and Xu, Jianeng,
+Sparse Regularization in Marketing and Economics (August 20, 2017).
+Available at SSRN: \url{https://ssrn.com/abstract=3022856}
+
+Marjanovic, G. and V. Solo (2014). lq sparsity penalized linear regression with cyclic descent.
+IEEE Transactions on Signal Processing 62(6), 1464–1475.
 }
 \seealso{
 \code{\link{predict.alphanorm}}, \code{\link{coef.alphanorm}}, \code{\link{cv.alphanorm}}, and \code{\link{plot.alphanorm}} methods

@@ -18,5 +18,5 @@ matrix of fitted values from alpha-norm model
 Similar to other predict methods, this function predicts fitted values from a fitted alphanorm model
 }
 \seealso{
-alphanorm,and cv.alphanorm methods
+\code{\link{alphanorm}}, and \code{\link{cv.alphanorm}} methods
 }

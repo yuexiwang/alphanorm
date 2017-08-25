@@ -14,7 +14,6 @@
 #' @import graphics
 #' @import stats
 
-
 alpha_map = function(b,h,z,lambda,q,beta)
 {
   tau = 0
@@ -57,9 +56,9 @@ alpha_map = function(b,h,z,lambda,q,beta)
 #' @details
 #' The sequence of models implied by \code{lambda} is solved via coordinate descent.
 #' The objective function is:
-#' RSS+ lambda*penalty .
-#' Here the penalty is the l_q norm of coefficients, which is sum(|beta_i|^q), 0<q<=1,
-#' when q=1, it is actually same as lasso
+#' \deqn{J(\beta)=1/2 \mbox{RSS}+\lambda*\mbox{penalty}}
+#' Here the penalty is the \eqn{l_q} norm of coefficients, which is \eqn{\sum(|\beta_i|^q), 0<q<=1},
+#' when \eqn{q=1}, it is actually same as lasso
 #' @examples
 #' x<-matrix(rnorm(100*100),100,100)
 #' # Only the first 10 are true predictors
@@ -76,8 +75,12 @@ alpha_map = function(b,h,z,lambda,q,beta)
 #' # Plot coefficient profile according to log-lambda
 #' plot(alphanorm.obj)
 #' @references
-#' Feng, Guanhao.,Polson, Nicolas G., Wang, Yuexi.and Xu, Jiang.(2017) Sparse regularization in marketing and Economics,
-#' \url{https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3022856}
+#' Feng, Guanhao and Polson, Nick and Wang, Yuexi and Xu, Jianeng,
+#' Sparse Regularization in Marketing and Economics (August 20, 2017).
+#' Available at SSRN: \url{https://ssrn.com/abstract=3022856}
+#'
+#' Marjanovic, G. and V. Solo (2014). lq sparsity penalized linear regression with cyclic descent.
+#' IEEE Transactions on Signal Processing 62(6), 1464–1475.
 #' @seealso \code{\link{predict.alphanorm}}, \code{\link{coef.alphanorm}}, \code{\link{cv.alphanorm}}, and \code{\link{plot.alphanorm}} methods
 #' @export
 alphanorm = function(x,y,lambda=exp(-10:10),q=0.5,
@@ -189,7 +192,7 @@ coef.alphanorm<-function(alphanorm.obj){
 #' @param alphanorm.obj a fitted alpha-norm model, returned by alphanorm()
 #' @param newx matrix of new values of x, if NULL, use the x in alphanorm.obj
 #' @return  matrix of fitted values from alpha-norm model
-#' @seealso alphanorm,and cv.alphanorm methods
+#' @seealso \code{\link{alphanorm}}, and \code{\link{cv.alphanorm}} methods
 #' @export
 predict.alphanorm<-function(alphanorm.obj,newx=NULL){
   #The input is from the result of alpha norm

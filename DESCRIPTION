@@ -4,10 +4,17 @@ Title: alpha-norm regularization
 Version: 0.1.0
 Author: Guanhao Feng, Nicholas G Polson, Yuexi Wang and Jianeng Xu
 Maintainer: Yuexi Wang <yxwang99@uchicago.edu>, Jianeng Xu <jianeng@uchicago.edu>
-Description: alpha-norm regulariztaion linear model
+Description: An implementation of alpha-norm regulariztaion linear model in R.
+    The alpha-norm penalty has the property of jumping to a sparse solution. 
+    This flexible nonconvex regularization problem is solved via cyclic
+    coordinate descent and a proximal operator. It is less aggresive in 
+    shrinking coefficients than the l_0 penalty , sparser and less biased than
+    l_1 norm(lasso), which is extremely useful in high-dimensional case and
+    when predictors are highly correlated. Our package also offers the  choice
+    of lasso (q=1), it can be useful when the model is not extremely sparse.
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
-Depends: graphics, stats
-VignetteBuilder: knitr
+Imports: graphics, stats
+
