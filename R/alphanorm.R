@@ -253,22 +253,15 @@ cv.alphanorm<-function(x,y,lambda_Tune=exp(-10:10),q_Tune=c(0.1,0.5,0.9),
     Y <- y[-newdata]
     Xnew <- x[newdata,]
     Ynew <- y[newdata]
-    if(intercept){
-      Xnew<- cbind(1,Xnew)
-    }
 
     for(k in 1:length(q_Tune)){
       tmp_tune<-alphanorm(X,Y,lambda=lambda_Tune,q=q_Tune[k],intercept,trace)
-      if(intercept){
-      tmp_beta<-rbind(tmp_tune$Intercept,tmp_tune$Coefficient)
-      }else{
-        tmp_beta<-tmp_tune$Coefficient
-      }
-      tmp_mse<-apply(tmp_beta,2,function(x) mean((Ynew-Xnew%*%x)^2))
+      tmp_pred<-predict(tmp_tune,newx=Xnew)
+      tmp_mse<-apply(tmp_pred,2,function(x) mean((Ynew-x)^2))
       alphaNorm_mse[k,,j]<-tmp_mse
     }
   }
-
+  
   alphaNorm_cve <- apply(alphaNorm_mse, c(1,2), mean)
   alphaNorm_best <- which(alphaNorm_cve == min(alphaNorm_cve),arr.ind=TRUE)
 
