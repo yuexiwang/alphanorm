@@ -75,7 +75,7 @@ alpha_map = function(b,h,z,lambda,q,beta)
 #' # Plot coefficient profile according to log-lambda
 #' plot(alphanorm.obj)
 #' @references
-#' Feng, Guanhao and Polson, Nick and Wang, Yuexi and Xu, Jianeng,
+#' Feng, Guanhao and Polson, Nicholas G and Wang, Yuexi and Xu, Jianeng,
 #' Sparse Regularization in Marketing and Economics (August 20, 2017).
 #' Available at SSRN: \url{https://ssrn.com/abstract=3022856}
 #'

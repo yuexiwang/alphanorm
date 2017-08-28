@@ -22,7 +22,7 @@
 #'Maintainer: Yuexi Wang <yxwang99@uchicago.edu>
 #'
 #' @references
-#' Feng, Guanhao and Polson, Nick and Wang, Yuexi and Xu, Jianeng,
+#' Feng, Guanhao and Polson, Nicholas G and Wang, Yuexi and Xu, Jianeng,
 #' Sparse Regularization in Marketing and Economics (August 20, 2017).
 #' Available at SSRN: \url{https://ssrn.com/abstract=3022856}
 #'
