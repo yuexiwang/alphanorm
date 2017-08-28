@@ -38,7 +38,7 @@ alpha_map = function(b,h,z,lambda,q,beta)
 #' @description Fit a alph-norm model with proximal algorithm and coordinate descent
 #' @param x the design matrix
 #' @param y the response vector
-#' @param lambda a vector of lambda values, default as exp(-10:10)
+#' @param lambda a vector of lambda values, default as exp(10:-10)
 #' @param q a numerical value for q, 0<q<=1, with default 0.5
 #' @param intercept whether the intercept term should be included, TRUE to be included(default), FALSE not to
 #' @param tol tolerence of convergence condition
@@ -48,7 +48,7 @@ alpha_map = function(b,h,z,lambda,q,beta)
 #' @return An object of S3 class "alphanorm"
 #' \item{\code{x}}{input design matrix}
 #' \item{\code{y}}{input of response vector}
-#' \item{\code{Lambda}}{input of lambda}
+#' \item{\code{Lambda}}{input of lambda in the decreasing order}
 #' \item{\code{q}}{input value of q}
 #' \item{\code{Coefficient}}{matrix coefficients}
 #' \item{\code{Intercept}}{non-penalized intercept(if intercept=TRUE), otherwise, NULL}
@@ -83,11 +83,12 @@ alpha_map = function(b,h,z,lambda,q,beta)
 #' IEEE Transactions on Signal Processing 62(6), 1464–1475.
 #' @seealso \code{\link{predict.alphanorm}}, \code{\link{coef.alphanorm}}, \code{\link{cv.alphanorm}}, and \code{\link{plot.alphanorm}} methods
 #' @export
-alphanorm = function(x,y,lambda=exp(-10:10),q=0.5,
+alphanorm = function(x,y,lambda=exp(10:-10),q=0.5,
                      intercept=TRUE,tol=1e-7,T=500,nlambda=NULL,trace=FALSE){
 
-  if(!is.null(nlambda)){
 
+  if(!is.null(nlambda)){
+    lambda<-exp(seq(10,-10,length.out = nlambda))
   }
 
   lambda = sort(lambda,decreasing = TRUE)
@@ -229,18 +230,19 @@ predict.alphanorm<-function(alphanorm.obj,newx=NULL){
 #' @param T number of maximum iterations for each coefficient
 #' @param trace print the process of alphanorm
 #' @return An object of S3 class "cv.alphanorm"
-#' \item{lambda}{the values of lambda used in the fits}
+#' \item{lambda}{the values of lambda used in the fits in the decreasing order}
 #' \item{q}{the values of q used in the fits}
 #' \item{cvm}{The mean cross-validation error, a matrix of length(q)*length(lambda) }
 #' \item{lambda.min}{value of lambda that gives minimum cvm}
 #' \item{q.min}{value of q that gives minimum cvm}
 #' @seealso \code{\link{alphanorm}}
 #' @export
-cv.alphanorm<-function(x,y,lambda_Tune=exp(-10:10),q_Tune=c(0.1,0.5,0.9),
+cv.alphanorm<-function(x,y,lambda_Tune=exp(10:-10),q_Tune=c(0.1,0.5,0.9),
                        intercept=TRUE,nfolds=5,tol=1e-7,T=500,trace=FALSE){
   #Here we use mse as the measure for CV
 
   numTrain<-length(y)
+  lambda_Tune<-sort(lambda_Tune,decreasing = TRUE)
 
   alphaNorm_mse<-array(NA,dim=c(length(q_Tune),length(lambda_Tune),nfolds))
   CVsample <- sample(1:numTrain,numTrain)
@@ -249,19 +251,19 @@ cv.alphanorm<-function(x,y,lambda_Tune=exp(-10:10),q_Tune=c(0.1,0.5,0.9),
   for(j in 1:nfolds){
     newdata <- CVsample[(CVcutoff[j] + 1):CVcutoff[j + 1]]
     size <- length(newdata)
-    X <- as.matrix(x[-newdata,])
+    X <- x[-newdata,]
     Y <- y[-newdata]
     Xnew <- x[newdata,]
     Ynew <- y[newdata]
 
     for(k in 1:length(q_Tune)){
-      tmp_tune<-alphanorm(X,Y,lambda=lambda_Tune,q=q_Tune[k],intercept,trace)
+      tmp_tune<-alphanorm(X,Y,lambda=lambda_Tune,q=q_Tune[k],intercept=intercept,trace=trace)
       tmp_pred<-predict(tmp_tune,newx=Xnew)
       tmp_mse<-apply(tmp_pred,2,function(x) mean((Ynew-x)^2))
       alphaNorm_mse[k,,j]<-tmp_mse
     }
   }
-  
+
   alphaNorm_cve <- apply(alphaNorm_mse, c(1,2), mean)
   alphaNorm_best <- which(alphaNorm_cve == min(alphaNorm_cve),arr.ind=TRUE)
 

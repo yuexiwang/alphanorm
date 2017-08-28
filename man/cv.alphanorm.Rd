@@ -4,7 +4,7 @@
 \alias{cv.alphanorm}
 \title{Cross-validation for alpha-norm}
 \usage{
-cv.alphanorm(x, y, lambda_Tune = exp(-10:10), q_Tune = c(0.1, 0.5, 0.9),
+cv.alphanorm(x, y, lambda_Tune = exp(10:-10), q_Tune = c(0.1, 0.5, 0.9),
   intercept = TRUE, nfolds = 5, tol = 1e-07, T = 500, trace = FALSE)
 }
 \arguments{
@@ -28,7 +28,7 @@ cv.alphanorm(x, y, lambda_Tune = exp(-10:10), q_Tune = c(0.1, 0.5, 0.9),
 }
 \value{
 An object of S3 class "cv.alphanorm"
-\item{lambda}{the values of lambda used in the fits}
+\item{lambda}{the values of lambda used in the fits in the decreasing order}
 \item{q}{the values of q used in the fits}
 \item{cvm}{The mean cross-validation error, a matrix of length(q)*length(lambda) }
 \item{lambda.min}{value of lambda that gives minimum cvm}

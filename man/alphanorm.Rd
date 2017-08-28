@@ -4,7 +4,7 @@
 \alias{alphanorm}
 \title{fit a sparse model with alpha-norm regularization}
 \usage{
-alphanorm(x, y, lambda = exp(-10:10), q = 0.5, intercept = TRUE,
+alphanorm(x, y, lambda = exp(10:-10), q = 0.5, intercept = TRUE,
   tol = 1e-07, T = 500, nlambda = NULL, trace = FALSE)
 }
 \arguments{
@@ -12,7 +12,7 @@ alphanorm(x, y, lambda = exp(-10:10), q = 0.5, intercept = TRUE,
 
 \item{y}{the response vector}
 
-\item{lambda}{a vector of lambda values, default as exp(-10:10)}
+\item{lambda}{a vector of lambda values, default as exp(10:-10)}
 
 \item{q}{a numerical value for q, 0<q<=1, with default 0.5}
 
@@ -30,7 +30,7 @@ alphanorm(x, y, lambda = exp(-10:10), q = 0.5, intercept = TRUE,
 An object of S3 class "alphanorm"
 \item{\code{x}}{input design matrix}
 \item{\code{y}}{input of response vector}
-\item{\code{Lambda}}{input of lambda}
+\item{\code{Lambda}}{input of lambda in the decreasing order}
 \item{\code{q}}{input value of q}
 \item{\code{Coefficient}}{matrix coefficients}
 \item{\code{Intercept}}{non-penalized intercept(if intercept=TRUE), otherwise, NULL}
