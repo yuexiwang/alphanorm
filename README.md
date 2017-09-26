@@ -1,9 +1,9 @@
-#README
------------
+# README
+
 
 This package is related to the work in "Sparse Regularization in Marketing and Economics" by Guanhao Feng, Nicholas Polson, Yuexi Wang and Jianeng Xu. <https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3022856>
 
-##Functions
+## Functions
 
 The package contains five functions and their usage is similar to those in `glmnet` package.
 
